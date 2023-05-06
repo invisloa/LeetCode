@@ -1,38 +1,45 @@
-﻿
+﻿using LeetCode;
 
-Console.WriteLine(LongestPalindrome("kaka"));
-
-
-
-
-
+string[] asd = { "01111", "01101", "00011", "11110" };
+Console.WriteLine(BitmapHoles(asd));
+LongestStringWithoutRepeats longestS = new LongestStringWithoutRepeats();
+Console.WriteLine(longestS.LengthOfLongestSubstringHash("pwwkew")); 
 
 
 
 
-string LongestPalindrome(string s)
+static string BitmapHoles(string[] strArr)
 {
-	int maxLength = 0;
-	int startIndex = 0;
-	for (int i = 0; i < s.Length; i++)
+
+	// code goes here  
+	int countHoles = 0;
+	int rows = strArr.Length;
+	int cols = strArr[0].Length;
+	for (int i = 0;i<rows; i++)
 	{
-		int start = i, end = i;
-
-		while (end < s.Length - 1 && s[start] == s[end + 1])
-			end++;
-
-		while (end < s.Length - 1 && start > 0 && s[start - 1] == s[end + 1])
+		for (int j = 0; j < cols; j++)
 		{
-			start--;
-			end++;
-		}
-		if (maxLength < end - start + 1)
-		{
-			maxLength = end - start + 1;
-			startIndex = start;
+			if (strArr[i][j] == '0')
+			{
+				countHoles++;
+				FillRegion(strArr,i,j,rows,cols);
+			}
 		}
 	}
-	return s.Substring(startIndex, maxLength);
+	return countHoles.ToString();
+
 }
 
+static void FillRegion(string[] strArray, int i, int j, int rows, int cols)
+{
+	if (i < 0 || j < 0 || i >= rows || j>=cols|| strArray[i][j] != '0')
+	{
+		return;
+	}
 
+	strArray[i] = strArray[i].Remove(j, 1).Insert(j, "H");
+	FillRegion(strArray, i - 1, j, rows, cols);
+	FillRegion(strArray, i + 1, j, rows, cols);
+	FillRegion(strArray, i , j-1, rows, cols);
+	FillRegion(strArray, i , j+1, rows, cols);
+}

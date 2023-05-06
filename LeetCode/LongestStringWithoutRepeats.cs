@@ -54,26 +54,28 @@ namespace LeetCode
 			}
 			return maxSub;
 		}
-		int LengthOfLongestSubstringHash(string s)
+		public int LengthOfLongestSubstringHash(string s)
 		{
-			HashSet<char> charSet = new HashSet<char>();
-			int left = 0, right = 0, maxLength = 0;
+			List<char> charList = new List<char>();
+			int right = 0, maxLength = 0;
+			int left = 0;
 			while (right < s.Length)
 			{
-				if (!charSet.Contains(s[right]))
+				if (!charList.Contains(s[right]))
 				{
-					charSet.Add(s[right]);
+					charList.Add(s[right]);
 					right++;
-					maxLength = Math.Max(maxLength, charSet.Count);
 				}
-				else
+				else 
 				{
-					charSet.Remove(s[left]);
-					left++;
+					maxLength = Math.Max(maxLength, charList.Count);
+					left = s.IndexOf(s[right], left)+1;
+					right = left;
+					charList.Clear();
 				}
 			}
+			maxLength = Math.Max(maxLength, charList.Count);
 			return maxLength;
 		}
-
 	}
 }
