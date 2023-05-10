@@ -1,45 +1,87 @@
 ﻿using LeetCode;
 
-string[] asd = { "01111", "01101", "00011", "11110" };
-Console.WriteLine(BitmapHoles(asd));
-LongestStringWithoutRepeats longestS = new LongestStringWithoutRepeats();
-Console.WriteLine(longestS.LengthOfLongestSubstringHash("pwwkew")); 
-
-
-
-
-static string BitmapHoles(string[] strArr)
+Console.WriteLine(IntToRoman(20));
+static string IntToRoman(int num)
 {
-
-	// code goes here  
-	int countHoles = 0;
-	int rows = strArr.Length;
-	int cols = strArr[0].Length;
-	for (int i = 0;i<rows; i++)
+	string resoultRomanNumber = string.Empty;
+	while (num >=1000)
 	{
-		for (int j = 0; j < cols; j++)
-		{
-			if (strArr[i][j] == '0')
-			{
-				countHoles++;
-				FillRegion(strArr,i,j,rows,cols);
-			}
-		}
+		resoultRomanNumber += "M";
+		num -= 1000;
 	}
-	return countHoles.ToString();
-
+	if(num>=900)
+	{
+		resoultRomanNumber += "CM";
+		num -= 900;
+	}
+	if(num>=500)
+	{
+		resoultRomanNumber += "D";
+		num -= 500;
+	}
+	if (num >= 400)
+	{
+		resoultRomanNumber += "CD";
+		num -= 400;
+	}
+	while(num >=100)
+	{
+		resoultRomanNumber += "C";
+		num -= 100;
+	}
+	if(num>=90)
+	{
+		resoultRomanNumber += "XC";
+		num -= 90;
+	}
+	if(num >= 50)
+	{
+		resoultRomanNumber += "L";
+		num -= 50;
+	}
+	if (num >= 40)
+	{
+		resoultRomanNumber += "XL";
+		num -= 40;
+	}
+	while  (num >= 10)
+	{
+		resoultRomanNumber += "X";
+		num -= 10;
+	}
+	if (num >= 9)
+	{
+		resoultRomanNumber += "IX";
+		num -= 9;
+	}
+	if (num >= 5)
+	{
+		resoultRomanNumber += "V";
+		num -= 5;
+	}
+	if (num >= 4)
+	{
+		resoultRomanNumber += "IV";
+		num -= 4;
+	}
+	while (num >= 1)
+	{
+		resoultRomanNumber += "I";
+		num -= 1;
+	}
+	return resoultRomanNumber;
 }
 
-static void FillRegion(string[] strArray, int i, int j, int rows, int cols)
-{
-	if (i < 0 || j < 0 || i >= rows || j>=cols|| strArray[i][j] != '0')
-	{
-		return;
-	}
 
-	strArray[i] = strArray[i].Remove(j, 1).Insert(j, "H");
-	FillRegion(strArray, i - 1, j, rows, cols);
-	FillRegion(strArray, i + 1, j, rows, cols);
-	FillRegion(strArray, i , j-1, rows, cols);
-	FillRegion(strArray, i , j+1, rows, cols);
-}
+
+
+Dictionary<string, int> romanDictionary = new Dictionary<string, int>()
+	{
+		{ "I", 1 },
+		{ "V", 5 },
+		{ "X", 10 },
+		{ "L", 50 },
+		{ "C", 100 },
+		{ "D", 500 },
+		{ "M", 1000 }
+	};

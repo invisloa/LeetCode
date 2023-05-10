@@ -8,6 +8,30 @@ namespace LeetCode
 {
 	internal class LongestStringWithoutRepeats
 	{
+		public int LengthOfLongestSubstringList(string s)
+		{
+			List<char> charList = new List<char>();
+			int right = 0, maxLength = 0;
+			int left = 0;
+			while (right < s.Length)
+			{
+				if (!charList.Contains(s[right]))
+				{
+					charList.Add(s[right]);
+					right++;
+				}
+				else
+				{
+					maxLength = Math.Max(maxLength, charList.Count);
+					left = s.IndexOf(s[right], left) + 1;
+					right = left;
+					charList.Clear();
+				}
+			}
+			maxLength = Math.Max(maxLength, charList.Count);
+			return maxLength;
+		}
+
 		string LengthOfLongestSubstring(string s)
 		{
 
@@ -53,29 +77,6 @@ namespace LeetCode
 				}
 			}
 			return maxSub;
-		}
-		public int LengthOfLongestSubstringHash(string s)
-		{
-			List<char> charList = new List<char>();
-			int right = 0, maxLength = 0;
-			int left = 0;
-			while (right < s.Length)
-			{
-				if (!charList.Contains(s[right]))
-				{
-					charList.Add(s[right]);
-					right++;
-				}
-				else 
-				{
-					maxLength = Math.Max(maxLength, charList.Count);
-					left = s.IndexOf(s[right], left)+1;
-					right = left;
-					charList.Clear();
-				}
-			}
-			maxLength = Math.Max(maxLength, charList.Count);
-			return maxLength;
 		}
 	}
 }
